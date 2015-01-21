@@ -13,7 +13,7 @@ module Desk
       options = {
         :headers => {'Accept' => "application/#{format}", 'User-Agent' => user_agent},
         :proxy => proxy,
-        :ssl => {:verify => false},
+        :ssl => {:verify => false, :version => 'SSLv23'},
         :url => api_endpoint,
       }
 
@@ -34,6 +34,7 @@ module Desk
         end
         builder.use Faraday::Response::RaiseHttp5xx
         builder.adapter(adapter)
+        builder.response :logger, logger unless logger.nil?
       end
     end
   end
